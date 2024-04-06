@@ -3,6 +3,7 @@ module Api
     class BooksController < ApplicationController
       def index
         books = Book.all
+        Book.all.destroy
         render json: books
       end
 
