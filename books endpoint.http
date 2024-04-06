@@ -1,1 +1,11 @@
+POST http://localhost:3000/api/v1/books
+Content-Type: application/json
+
+{
+"book": {
+    "title": "Harry Potter"
+ }
+}
+
+### GET ALL BOOKS
 GET http://localhost:3000/books
