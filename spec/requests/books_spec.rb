@@ -4,7 +4,8 @@ describe "Books API", type: :request do
   endpoint = "/api/v1/books"
 
   describe :get_books do
-    FactoryBot.create(:book, author: "Tega", title: "You")
+
+    FactoryBot.create(:book, author: "1", title: "You")
     FactoryBot.create(:book, author: "Terader", title: "Him")
 
     it "should return all books" do

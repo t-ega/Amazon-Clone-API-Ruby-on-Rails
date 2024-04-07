@@ -3,9 +3,14 @@ Content-Type: application/json
 
 {
 "book": {
-    "title": "Harry Potter"
- }
+    "title": "Harry Potter 2"
+ },
+  "author": {
+    "first_name": "Terader",
+    "last_name": "Akpojiyovwi",
+    "age": 20
+  }
 }
 
 ### GET ALL BOOKS
-GET http://localhost:3000/books
+GET http://localhost:3000/api/v1/books
