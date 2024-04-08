@@ -40,6 +40,60 @@ describe "Books API", type: :request do
       ]))
     end
 
+    it 'should return a subset of books based on limit' do
+      FactoryBot.create(:book, author: author, title: "Book 1")
+      FactoryBot.create(:book, author: author, title: "Book 2")
+
+      get endpoint, params: { limit: 1 }
+
+      expect(response).to have_http_status(:success)
+      expect(JSON.parse(response.body).size).to eq(1)
+
+      expect(JSON.parse(response.body)).to(eq([
+        {
+          "id"=> 1,
+          "title"=>  "Book 1",
+          "author"=>  {
+            "id"=>  1,
+            "first_name"=>  "Test",
+            "last_name"=>  "Author",
+            "age"=>  1,
+            "full_name"=>  "Test Author"
+          }
+        },]
+      ))
+
+
+
+
+    end
+
+    it 'should return a subset of books based on limit and offset' do
+      FactoryBot.create(:book, author: author, title: "Book 1")
+      FactoryBot.create(:book, author: author, title: "Book 2")
+
+      get endpoint, params: { limit: 1, offset: 1 }
+
+      expect(response).to have_http_status(:success)
+      expect(JSON.parse(response.body).size).to eq(1)
+
+      expect(JSON.parse(response.body)).to(eq([
+                                                {
+                                                  "id"=> 2,
+                                                  "title"=>  "Book 2",
+                                                  "author"=>  {
+                                                    "id"=>  1,
+                                                    "first_name"=>  "Test",
+                                                    "last_name"=>  "Author",
+                                                    "age"=>  1,
+                                                    "full_name"=>  "Test Author"
+                                                  }
+                                                },]
+                                           ))
+
+
+    end
+
   end
 
   describe "POST /books" do
@@ -52,7 +106,6 @@ describe "Books API", type: :request do
       }.to change {Book.count}.from(0).to(1)
 
       expect(response).to have_http_status(:created)
-      puts JSON.parse(response.body)
       expect(JSON.parse(response.body)).to(eq(
           {
             "id"=> 1,
