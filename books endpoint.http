@@ -10,3 +10,6 @@ Content-Type: application/json
 
 ### GET ALL BOOKS
 GET http://localhost:3000/api/v1/books
+
+### Get A Book
+GET http://localhost:3000/api/v1/books/2

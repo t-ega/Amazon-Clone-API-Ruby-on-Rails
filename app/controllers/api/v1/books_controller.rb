@@ -1,22 +1,24 @@
-require_relative '../../../representers/book_representer'
-require_relative '../../../representers/books_representer'
-
 module Api
   module V1
+
     class BooksController < ApplicationController
+
+      def show
+        book = Book.first
+        render json: book, serializer: BookSerializer
+      end
 
       def index
         books = Book.all
-        books_json = Booksrepresenter.new(books).as_json
 
-        render json: books
+        render json: books, each_serializer: BookSerializer
       end
 
       def create
         book = Book.new(book_params)
 
         if book.save
-          render json: Bookrepresenter.new(book).as_json, status: :created
+          render json: book, status: :created
         else
           render json: book.errors, status: :bad_request
         end

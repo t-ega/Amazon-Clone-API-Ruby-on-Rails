@@ -14,6 +14,30 @@ describe "Books API", type: :request do
       get endpoint
       expect(response).to have_http_status(:success)
       expect(JSON.parse(response.body).size).to eq(2)
+
+      expect(JSON.parse(response.body)).to(eq([
+         {
+           "id"=> 1,
+           "title"=>  "Book 1",
+           "author"=>  {
+             "id"=>  1,
+             "first_name"=>  "Test",
+             "last_name"=>  "Author",
+             "age"=>  1,
+             "full_name"=>  "Test Author"
+           }
+         }, {
+         "id"=> 2,
+         "title"=>  "Book 2",
+         "author"=>  {
+           "id"=>  1,
+           "first_name"=>  "Test",
+           "last_name"=>  "Author",
+           "age"=>  1,
+           "full_name"=>  "Test Author"
+         }
+       }
+      ]))
     end
 
   end
@@ -28,6 +52,19 @@ describe "Books API", type: :request do
       }.to change {Book.count}.from(0).to(1)
 
       expect(response).to have_http_status(:created)
+      puts JSON.parse(response.body)
+      expect(JSON.parse(response.body)).to(eq(
+          {
+            "id"=> 1,
+            "title"=>  "My title",
+            "author"=>  {
+              "id"=>  1,
+              "first_name"=>  "Test",
+              "last_name"=>  "Author",
+              "age"=>  1,
+              "full_name"=>  "Test Author"
+            }
+          }))
     end
 
   end
