@@ -47,3 +47,4 @@ group :development do
   # gem "spring"
 end
 
+gem 'active_model_serializers'

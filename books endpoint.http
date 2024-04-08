@@ -3,13 +3,9 @@ Content-Type: application/json
 
 {
 "book": {
-    "title": "Harry Potter 2"
- },
-  "author": {
-    "first_name": "Terader",
-    "last_name": "Akpojiyovwi",
-    "age": 20
-  }
+  "title": "Harry Potter 20",
+  "author_id": 3
+ }
 }
 
 ### GET ALL BOOKS

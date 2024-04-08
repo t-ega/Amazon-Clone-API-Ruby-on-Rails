@@ -1,4 +1,5 @@
 require_relative '../../../representers/book_representer'
+require_relative '../../../representers/books_representer'
 
 module Api
   module V1
@@ -8,16 +9,14 @@ module Api
         books = Book.all
         books_json = Booksrepresenter.new(books).as_json
 
-        render json: books_json
+        render json: books
       end
 
       def create
-        puts params
-        author = Author.create(author_params)
-        book = Book.new(book_params.merge({author_id: author.id}))
+        book = Book.new(book_params)
 
         if book.save
-          render json: book, status: :created
+          render json: Bookrepresenter.new(book).as_json, status: :created
         else
           render json: book.errors, status: :bad_request
         end
@@ -30,12 +29,8 @@ module Api
 
       private
 
-      def author_params
-        params.require(:author).permit(:first_name, :last_name, :age)
-      end
-
       def book_params
-        params.require(:book).permit(:author, :title)
+        params.require(:book).permit(:title, :author_id)
       end
     end
 
