@@ -3,6 +3,11 @@ Rails.application.routes.draw do
     namespace :v1 do
       resources :books, only: %i[index create destroy show]
       resources :authors, only: %i[index create]
+
+      get "auth/signup", to: "auth#create"
+      get "auth/login", to: "auth#signin"
+      get "auth/logout", to: "auth#signout"
+
     end
   end
   # Define your application routes per the DSL in https://guides.rubyonrails.org/routing.html
