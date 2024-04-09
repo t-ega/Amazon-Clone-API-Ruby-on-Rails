@@ -1,12 +1,11 @@
 class UserController < ApplicationController
 
-  def create
-    user = User.new(user_params)
-    if user.save
-      render json: user
-    else
-      render json: user.errors.as_json
-    end
+  def edit
+    @user = User.find(params[:id])
+    render json: ErrorFactory.format_message("User not found", :not_found),
+           status: :not_found unless @user
+
+  #   TODO: Handle editing of a users account
   end
 
   private

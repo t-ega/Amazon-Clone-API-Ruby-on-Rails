@@ -11,6 +11,11 @@ class User < ApplicationRecord
     update_columns(confirmed_at: Time.current)
   end
 
+  def send_confirmation_email!
+    confirmation_token = generate_confirmation_token
+    UserMailer.confirmation(self, confirmation_token).deliver_now
+  end
+
   def confirmed?
     confirmed_at.present?
   end

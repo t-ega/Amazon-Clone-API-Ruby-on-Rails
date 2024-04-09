@@ -4,9 +4,10 @@ module V1
     rescue_from ActionController::ParameterMissing, with: :exception_handler
 
     def create
-
+      User.all.map(&:destroy)
       user = User.new(sign_up_params)
       if user.save
+        user.send_confirmation_email!
         render json: ResponseFactory.format_response("Sign-up successful. Check email for confirmation token")
       else
         render json: ErrorFactory.format_message(user.errors.as_json), status: :bad_request
