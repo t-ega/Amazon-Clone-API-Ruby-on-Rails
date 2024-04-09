@@ -4,9 +4,9 @@ Rails.application.routes.draw do
       resources :books, only: %i[index create destroy show]
       resources :authors, only: %i[index create]
 
-      get "auth/signup", to: "auth#create"
-      get "auth/login", to: "auth#signin"
-      get "auth/logout", to: "auth#signout"
+      post "auth/signup", to: "auth#create"
+      post "auth/login", to: "auth#sign_in"
+      post "auth/logout", to: "auth#sign_out"
 
     end
   end

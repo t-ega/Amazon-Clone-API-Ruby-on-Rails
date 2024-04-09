@@ -13,3 +13,12 @@ GET http://localhost:3000/api/v1/books
 
 ### Get A Book
 GET http://localhost:3000/api/v1/books/2
+
+### Sign in
+POST http://localhost:3000/api/v1/auth/login
+Content-Type: application/json
+
+{
+  "email": "beniyoke@gmail.com",
+  "password": "er"
+}
