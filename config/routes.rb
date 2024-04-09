@@ -3,10 +3,12 @@ Rails.application.routes.draw do
     namespace :v1 do
       resources :books, only: %i[index create destroy show]
       resources :authors, only: %i[index create]
+      resources :confirmations, only: %i[create edit], param: :confirmation_token
 
       post "auth/signup", to: "auth#create"
       post "auth/login", to: "auth#sign_in"
       post "auth/logout", to: "auth#sign_out"
+
 
     end
   end

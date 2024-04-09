@@ -1,7 +1,9 @@
 class User < ApplicationRecord
   CONFIRMATION_TOKEN_EXPIRATION = 10.minutes
+  has_secure_password
 
-  validates :password, presence: true, length: {minimum: 6}
+  validates :password, presence: true, confirmation: true, length: {minimum: 6}
+  validates :password_confirmation, presence: true
   validates :email, format: {with: URI::MailTo::EMAIL_REGEXP}, presence: true, uniqueness: true
   normalizes :email, :name, with: -> attribute {attribute.strip.downcase}
 

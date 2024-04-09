@@ -1,9 +1,10 @@
 module Api
 module V1
   class AuthController < ApplicationController
-    rescue_from ActionController::ParameterMissing, with: :params_missing
+    rescue_from ActionController::ParameterMissing, with: :exception_handler
 
     def create
+
       user = User.new(sign_up_params)
       if user.save
         render json: ResponseFactory.format_response("Sign-up successful. Check email for confirmation token")
@@ -39,7 +40,7 @@ module V1
       [email, password]
     end
 
-    def params_missing(exception)
+    def exception_handler(exception)
       render json: ErrorFactory.format_message(exception.to_json), status: :bad_request
     end
 

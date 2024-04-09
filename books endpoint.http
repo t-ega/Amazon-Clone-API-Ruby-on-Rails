@@ -22,3 +22,17 @@ Content-Type: application/json
   "email": "beniyoke@gmail.com",
   "password": "er"
 }
+
+### Sign Up
+POST http://localhost:3000/api/v1/auth/signup
+Content-Type: application/json
+
+{
+  "user": {
+    "name": "John Doe",
+    "email": "johndoe@example.com",
+    "phone": "1234567890",
+    "password": "secretpassword",
+    "password_confirmation": "secretpassword"
+  }
+}
