@@ -40,6 +40,7 @@ group :development, :test do
   gem "debug", platforms: %i[ mri windows ]
   gem 'rspec-rails', '~> 6.1', '>= 6.1.2'
   gem "factory_bot_rails"
+  gem 'quidax', '~> 0.1.0'
 end
 
 group :development do
@@ -48,3 +49,5 @@ group :development do
 end
 
 gem 'active_model_serializers'
+
+gem 'jwt'

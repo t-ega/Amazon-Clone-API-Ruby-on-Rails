@@ -20,7 +20,10 @@ module Api
         user = User.find_signed(params[:confirmation_token], purpose: :confirm_email)
         if user.present?
           user.confirm!
-          render json: ResponseFactory.format_response("Successfully confirmed")
+
+          # Create a JWT token by encoding the user data
+          token = encode_user_data(user.id)
+          render json: ResponseFactory.format_response({token: token})
         else
           render json: ErrorFactory.format_message("Invalid token.")
         end

@@ -6,6 +6,7 @@ module V1
     def create
       User.all.map(&:destroy)
       user = User.new(sign_up_params)
+
       if user.save
         user.send_confirmation_email!
         render json: ResponseFactory.format_response("Sign-up successful. Check email for confirmation token")
@@ -28,6 +29,10 @@ module V1
         render json: ErrorFactory.
           format_message("Incorrect email or password"), status: :bad_request
       end
+
+      # Create a JWT token by encoding the user data
+      token = encode_user_data(user.id)
+      render json: ResponseFactory.format_response({token: token})
     end
 
     def sign_out

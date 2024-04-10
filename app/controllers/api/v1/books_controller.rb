@@ -2,6 +2,9 @@ module Api
   module V1
 
     class BooksController < ApplicationController
+      # authenticate is the method we define in application_controller.rb to check request.headers['token']
+      before_action :authenticate
+
       MAX_PAGINATION_LIMIT = 100
 
       def show
