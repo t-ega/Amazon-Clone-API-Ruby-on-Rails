@@ -10,7 +10,8 @@ Content-Type: application/json
 
 ### GET ALL BOOKS
 GET http://localhost:3000/api/v1/books
-Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJ1c2VyX2lkIjoxOSwiZXhwIjoiMTcxMjg2Mjk0OSJ9.7wP-0-y8SI1d4KsA-aPAagcVleMztisMPQJpTP6WhGo
+Authorization: Bearer eyJhbGciOiIUzI1NiJ9.eyJ1c2VyX2lkIjoyMCwiZXhwIjoiMTcxMjg2NzE5OSJ9.E2bhcjKzw9B2nymnJN-19rN-iyLEUwkFDjBXPFQ6gLc
+
 
 ### Get A Book
 GET http://localhost:3000/api/v1/books/2
