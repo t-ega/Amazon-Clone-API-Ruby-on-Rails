@@ -71,7 +71,8 @@ module Api
       ERROR_TYPES = {
         authentication_failure: { http_code: 401, message: 'The user is not authenticated.' },
         not_found: { http_code: 404, message: 'The requested resource was not found.' },
-        validation_error: { http_code: 400, message: 'Validation failed.' },
+        validation_error: { http_code: 422, message: 'Validation failed.' },
+        bad_request: { http_code: 400, message: 'Bad request' },
         unauthorized: { http_code: 403, message: 'Access to the resource is unauthorized.' },
         server_error: { http_code: 500, message: 'An internal server error occurred.' }
       }

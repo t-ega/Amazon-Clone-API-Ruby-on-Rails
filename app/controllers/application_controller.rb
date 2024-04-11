@@ -8,14 +8,21 @@ class ApplicationController < ActionController::API
   end
 
   def response_handler(res)
-    if res.kind_of? StandardError
+    if res.kind_of? Api::V1::ApplicationError
       error_handler(res)
+    else
+      success_handler(res)
     end
+  end
+
+  def success_handler(res)
+    render status: 200, json: { success: true, data: res }
   end
 
   def error_handler(e)
     code = e.config[:http_code] || 500
-    render status: code, json: { success: false, error: e.message, code: e.code }
+    render status: code, json: { success: false, error: e.message }
   end
+
 
 end

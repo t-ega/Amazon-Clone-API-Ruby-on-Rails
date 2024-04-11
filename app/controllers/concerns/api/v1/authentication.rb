@@ -17,7 +17,7 @@ module Api
       def authenticate
 
         bearer_token = request.headers.fetch("Authorization", nil)
-        raise Api::V1::ApplicationError::Unauthorized("Bearer <token> required") unless bearer_token
+        raise ApplicationError::Unauthorized("Bearer <token> required") unless bearer_token
 
         stripped_token =  bearer_token.to_s.gsub("Bearer ", "")
         decode_data = decode_user_data(stripped_token)
@@ -25,13 +25,13 @@ module Api
         # getting user id from a nested JSON in an array.
         user_id = decode_data[0]["user_id"] if decode_data
 
-        raise Api::V1::ApplicationError::Unauthorized("Invalid token") unless user_id
+        raise ApplicationError::Unauthorized("Invalid token") unless user_id
 
         # find a user in the database to be sure token is for a real user
         user = User.find(user_id)
 
         return true if user
-        raise Api::V1::ApplicationError::Unauthorized("Token has expired or invalid")
+        raise ApplicationError::Unauthorized("Token has expired or invalid")
       end
 
       # decode token and return user info, this returns an array, [payload and algorithms]

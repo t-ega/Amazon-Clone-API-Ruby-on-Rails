@@ -11,7 +11,7 @@ module V1
         user.send_confirmation_email!
         render json: ResponseFactory.format_response("Sign-up successful. Check email for confirmation token")
       else
-        render json: ErrorFactory.format_message(user.errors.as_json), status: :bad_request
+        raise ApplicationError::BadRequest(user.errors.as_json)
       end
 
     end
@@ -21,13 +21,11 @@ module V1
       user = User.find_by(email: email)
 
       unless user.present?
-        return render json: ErrorFactory.
-          format_message("Incorrect email or password"), status: :bad_request
+        raise ApplicationError::BadRequest("Incorrect email or password")
       end
 
       unless user.authenticate(password)
-        render json: ErrorFactory.
-          format_message("Incorrect email or password"), status: :bad_request
+        raise ApplicationError::BadRequest("Incorrect email or password")
       end
 
       # Create a JWT token by encoding the user data
@@ -47,7 +45,7 @@ module V1
     end
 
     def exception_handler(exception)
-      render json: ErrorFactory.format_message(exception.to_json), status: :bad_request
+      raise ApplicationError::BadRequest(exception.to_json)
     end
 
     def sign_up_params
