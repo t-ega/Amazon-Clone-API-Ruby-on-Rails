@@ -51,4 +51,26 @@ RSpec.describe "Auths", type: :request do
       expect(response.body).to include("error")
     end
   end
+
+  describe "POST /sign-in" do
+
+    it "should successfully login in a user" do
+      FactoryBot.create(:user, email: "test@test.com", password: "password", password_confirmation: "password")
+
+      post "/api/v1/auth/login/", params: {"email": "test@test.com", "password": "password"}
+
+      expect(response).to have_http_status(:ok)
+      expect(response.body).to include("token")
+    end
+
+    it "should return an error for incorrect user details" do
+      FactoryBot.create(:user, email: "test@test.com", password: "password", password_confirmation: "password")
+
+      post "/api/v1/auth/login/", params: {"email": "test@test.com", "password": "null"}
+
+      expect(response).to have_http_status(:bad_request)
+      expect(response.body).to_not include("token")
+    end
+
+  end
 end
