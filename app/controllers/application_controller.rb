@@ -3,6 +3,12 @@ require 'jwt'
 class ApplicationController < ActionController::API
   include Api::V1::Authentication
 
+  rescue_from ActionController::ParameterMissing do |ex|
+    err = Api::V1::ApplicationError::BadRequest(ex.message)
+    puts err.inspect
+    error_handler(err)
+  end
+
   rescue_from Api::V1::ApplicationError do | ex |
     response_handler(ex)
   end
@@ -20,7 +26,7 @@ class ApplicationController < ActionController::API
   end
 
   def error_handler(e)
-    code = e.config[:http_code] || 500
+    code = e.http_code || 500
     render status: code, json: { success: false, error: e.message }
   end
 

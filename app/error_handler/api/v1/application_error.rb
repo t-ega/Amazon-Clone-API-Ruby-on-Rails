@@ -8,7 +8,6 @@ module Api
 
       # responds to all the below attributes
       attr_accessor :config,
-                    :code,
                     :message,
                     :http_code
 

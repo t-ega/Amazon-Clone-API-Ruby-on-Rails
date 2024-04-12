@@ -23,7 +23,7 @@ module Api
         if book.save
           render json: book, status: :created
         else
-          render json: book.errors, status: :bad_request
+          raise ApplicationError::BadRequest(book.errors)
         end
       end
 

@@ -1,7 +1,6 @@
 module Api
 module V1
   class AuthController < ApplicationController
-    rescue_from ActionController::ParameterMissing, with: :exception_handler
 
     def create
       User.all.map(&:destroy)
@@ -9,9 +8,9 @@ module V1
 
       if user.save
         user.send_confirmation_email!
-        render json: ResponseFactory.format_response("Sign-up successful. Check email for confirmation token")
+        render status: :created, json: ResponseFactory.format_response("Sign-up successful. Check email for confirmation token")
       else
-        raise ApplicationError::BadRequest(user.errors.as_json)
+        raise ApplicationError::BadRequest(user.errors)
       end
 
     end

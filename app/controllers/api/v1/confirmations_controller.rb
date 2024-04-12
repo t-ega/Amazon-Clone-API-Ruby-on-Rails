@@ -11,7 +11,7 @@ module Api
           user.send_confirmation_email!
           render json: ResponseFactory.format_response("Email confirmation sent. Check email")
         else
-          render json: ErrorFactory.format_message("We could not find a user with that email or that email has already been confirmed.")
+          raise ApplicationError::BadRequest("We could not find a user with that email or that email has already been confirmed.")
         end
       end
 
@@ -25,7 +25,7 @@ module Api
           token = encode_user_data(user.id)
           render json: ResponseFactory.format_response({token: token})
         else
-          render json: ErrorFactory.format_message("Invalid token.")
+          raise ApplicationError::BadRequest("Invalid token.")
         end
       end
 
