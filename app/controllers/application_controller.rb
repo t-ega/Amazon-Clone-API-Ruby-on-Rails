@@ -5,24 +5,16 @@ class ApplicationController < ActionController::API
 
   rescue_from ActionController::ParameterMissing do |ex|
     err = Api::V1::ApplicationError::BadRequest(ex.message)
-    puts err.inspect
     error_handler(err)
   end
 
   rescue_from Api::V1::ApplicationError do | ex |
-    response_handler(ex)
+    error_handler(ex)
   end
 
-  def response_handler(res)
-    if res.kind_of? Api::V1::ApplicationError
-      error_handler(res)
-    else
-      success_handler(res)
-    end
-  end
-
-  def success_handler(res)
-    render status: 200, json: { success: true, data: res }
+  def success_handler(res, status_code=:ok)
+    numerical_status_code = Rack::Utils::SYMBOL_TO_STATUS_CODE.fetch(status_code, 200)
+    render status: status_code, json: { success: true, status: numerical_status_code, data: res }
   end
 
   def error_handler(e)

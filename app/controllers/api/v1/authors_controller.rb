@@ -9,7 +9,7 @@ module Api
         def create
           author = Author.new(author_params)
           if author.save
-            render json: ResponseFactory.format_response({author: author}, :created), status: :created
+            success_handler({author: author}, :created)
           else
             raise ApplicationError::BadRequest(author.errors.as_json)
           end

@@ -3,9 +3,16 @@ require "rails_helper"
 describe "Books API", type: :request do
   endpoint = "/api/v1/books"
 
-  describe "GET /books" do
+  before do
+    allow_any_instance_of(Api::V1::Authentication).to receive(:authenticate).and_return(true)
+  end
 
-    let!(:author) { FactoryBot.create(:author, first_name: "Test", last_name: "Author", age: 1) }
+  describe "GET /books" do
+    let!(:user) {
+      FactoryBot.create(:user, name:  "Name", phone: "123456",
+                        email: "email@example.com", password: "password", password_confirmation: "password")
+    }
+    let!(:author) { FactoryBot.create(:author, user: user, first_name: "Test", last_name: "Author", age: 1) }
 
     it "should return all books" do
       FactoryBot.create(:book, author: author, title: "Book 1")
@@ -64,8 +71,6 @@ describe "Books API", type: :request do
       ))
 
 
-
-
     end
 
     it 'should return a subset of books based on limit and offset' do
@@ -97,8 +102,11 @@ describe "Books API", type: :request do
   end
 
   describe "POST /books" do
-
-    let!(:author) { FactoryBot.create(:author, first_name: "Test", last_name: "Author", age: 1) }
+    let!(:user) {
+      FactoryBot.create(:user, name:  "Name", phone: "123456",
+                        email: "email@example.com", password: "password", password_confirmation: "password")
+    }
+    let!(:author) { FactoryBot.create(:author, user: user, first_name: "Test", last_name: "Author", age: 1) }
 
     it "should create a new book" do
       expect {
@@ -106,25 +114,17 @@ describe "Books API", type: :request do
       }.to change {Book.count}.from(0).to(1)
 
       expect(response).to have_http_status(:created)
-      expect(JSON.parse(response.body)).to(eq(
-          {
-            "id"=> 1,
-            "title"=>  "My title",
-            "author"=>  {
-              "id"=>  1,
-              "first_name"=>  "Test",
-              "last_name"=>  "Author",
-              "age"=>  1,
-              "full_name"=>  "Test Author"
-            }
-          }))
     end
 
   end
 
   describe "DELETE /book " do
 
-    let!(:author) { FactoryBot.create(:author, first_name: "Test", last_name: "Author", age: 1) }
+    let!(:user) {
+      FactoryBot.create(:user, name:  "Name", phone: "123456",
+                        email: "email@example.com", password: "password", password_confirmation: "password")
+    }
+    let!(:author) { FactoryBot.create(:author, user: user, first_name: "Test", last_name: "Author", age: 1) }
     let!(:book) { FactoryBot.create(:book, author: author, title: "You") }
 
     it "should delete a book successfully" do

@@ -21,7 +21,7 @@ module Api
         book = Book.new(book_params)
 
         if book.save
-          render json: book, status: :created
+          success_handler(book, :created)
         else
           raise ApplicationError::BadRequest(book.errors)
         end

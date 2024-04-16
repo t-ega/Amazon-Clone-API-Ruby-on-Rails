@@ -8,7 +8,7 @@ module V1
 
       if user.save
         user.send_confirmation_email!
-        render status: :created, json: ResponseFactory.format_response("Sign-up successful. Check email for confirmation token")
+        success_handler("Sign-up successful. Check email for confirmation token", :created)
       else
         raise ApplicationError::BadRequest(user.errors)
       end
@@ -29,7 +29,7 @@ module V1
 
       # Create a JWT token by encoding the user data
       token = encode_user_data(user.id)
-      render json: ResponseFactory.format_response({token: token})
+      success_handler({token: token})
     end
 
     def sign_out

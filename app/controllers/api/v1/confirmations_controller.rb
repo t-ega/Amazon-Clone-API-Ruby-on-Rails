@@ -9,7 +9,7 @@ module Api
 
         if user.present? && user.unconfirmed?
           user.send_confirmation_email!
-          render json: ResponseFactory.format_response("Email confirmation sent. Check email")
+          success_handler("Email confirmation sent. Check email")
         else
           raise ApplicationError::BadRequest("We could not find a user with that email or that email has already been confirmed.")
         end
@@ -23,7 +23,7 @@ module Api
 
           # Create a JWT token by encoding the user data
           token = encode_user_data(user.id)
-          render json: ResponseFactory.format_response({token: token})
+          success_handler({token: token})
         else
           raise ApplicationError::BadRequest("Invalid token.")
         end
