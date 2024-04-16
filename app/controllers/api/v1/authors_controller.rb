@@ -9,9 +9,9 @@ module Api
         def create
           author = Author.new(author_params)
           if author.save
-            render json: author
+            render ResponseFactory.format_response({author: author}, :created), status: :created
           else
-            render json: author.errors, status: :bad_request
+            raise ApplicationError::BadRequest(author.errors.as_json)
           end
 
         end
@@ -20,7 +20,7 @@ module Api
         attr_reader :authors
 
         def author_params
-          params.require(:author).permit(:first_name, :last_name, :age)
+          params.require(:author).permit(:first_name, :last_name, :age, :user_id)
         end
   end
   end
