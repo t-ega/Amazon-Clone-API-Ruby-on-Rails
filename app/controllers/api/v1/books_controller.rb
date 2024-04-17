@@ -8,7 +8,7 @@ module Api
       MAX_PAGINATION_LIMIT = 100
 
       def show
-        book = Book.first
+        book = Book.find(params[:id])
         render json: book, serializer: BookSerializer
       end
 
