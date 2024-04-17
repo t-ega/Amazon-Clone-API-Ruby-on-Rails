@@ -3,7 +3,7 @@
 This API provides functionalities similar to an Amazon clone. It allows users to register, login, logout, and perform various actions related to authors and books.
 
 ## Table of Contents
-
+- [Setup](#setup)
 - [Registration](#registration)
 - [Authentication](#authentication)
 - [Authors](#authors)
@@ -19,6 +19,58 @@ This API provides functionalities similar to an Amazon clone. It allows users to
 - [Confirmation](#confirmation)
     - [Resend Confirmation Email](#resend-confirmation-email)
 - [Request and response formats](#request-and-response-formats)
+
+
+## Setup
+
+1. Clone the Amazon Clone API repository from GitHub:
+
+   ```
+   git clone https://github.com/t-ega/amazon-clone-api.git
+   ```
+
+2. Navigate to the project directory:
+
+   ```
+   cd amazon-clone-api
+   ```
+
+3. Install the required gems specified in the Gemfile:
+
+   ```
+   bundle install
+   ```
+
+4. Set up the database by running the following commands:
+
+   ```
+   rails db:create
+   rails db:migrate
+   ```
+
+5. Set up the environment variables by creating a `.env` file in the project root directory. You can use the following template and replace the values with your own:
+
+   ```
+   PORT=3000
+   DATABASE_URL=mongodb://localhost:27017/amazon_clone
+   JWT_SECRET=your-secret-key
+   EMAIL_API_KEY=your-email-api-key
+   EMAIL_SENDER=your-email-sender
+   ```
+
+    - `PORT`: The port number on which the API should run (default: 3000).
+    - `DATABASE_URL`: The URL of your MongoDB database.
+    - `JWT_SECRET`: A secret key used for JWT token generation and verification.
+    - `EMAIL_API_KEY`: API key for the email service provider (e.g., SendGrid, Mailgun).
+    - `EMAIL_SENDER`: Email address from which confirmation emails will be sent.
+
+6. Start the Rails server:
+
+   ```
+   rails server
+   ```
+
+   The API should now be running and accessible at `http://localhost:3000` (or the specified port).
 
 ## Registration
 
