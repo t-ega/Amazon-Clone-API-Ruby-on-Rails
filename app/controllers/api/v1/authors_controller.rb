@@ -6,6 +6,11 @@ module Api
           @authors = Author.all
         end
 
+        def show
+          @author = Author.includes(:books).find(params[:id])
+          success_handler({author: @author})
+        end
+
         def create
           author = Author.new(author_params)
           if author.save
