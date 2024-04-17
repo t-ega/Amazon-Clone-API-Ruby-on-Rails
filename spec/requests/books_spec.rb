@@ -15,8 +15,8 @@ describe "Books API", type: :request do
     let!(:author) { FactoryBot.create(:author, user: user, first_name: "Test", last_name: "Author", age: 1) }
 
     it "should return all books" do
-      FactoryBot.create(:book, author: author, title: "Book 1")
-      FactoryBot.create(:book, author: author, title: "Book 2")
+      FactoryBot.create(:book, author: author, title: "Book 1", price: 100)
+      FactoryBot.create(:book, author: author, title: "Book 2", price: 100)
 
       get endpoint
       expect(response).to have_http_status(:success)
@@ -48,8 +48,8 @@ describe "Books API", type: :request do
     end
 
     it 'should return a subset of books based on limit' do
-      FactoryBot.create(:book, author: author, title: "Book 1")
-      FactoryBot.create(:book, author: author, title: "Book 2")
+      FactoryBot.create(:book, author: author, title: "Book 1", price: 100)
+      FactoryBot.create(:book, author: author, title: "Book 2", price: 100)
 
       get endpoint, params: { limit: 1 }
 
@@ -74,8 +74,8 @@ describe "Books API", type: :request do
     end
 
     it 'should return a subset of books based on limit and offset' do
-      FactoryBot.create(:book, author: author, title: "Book 1")
-      FactoryBot.create(:book, author: author, title: "Book 2")
+      FactoryBot.create(:book, author: author, title: "Book 1", price: 100)
+      FactoryBot.create(:book, author: author, title: "Book 2", price: 100)
 
       get endpoint, params: { limit: 1, offset: 1 }
 
@@ -110,7 +110,7 @@ describe "Books API", type: :request do
 
     it "should create a new book" do
       expect {
-        post endpoint, params: {book: {author_id: author.id, title: "My title"}};
+        post endpoint, params: {book: {author_id: author.id, price: 100, title: "My title"}};
       }.to change {Book.count}.from(0).to(1)
 
       expect(response).to have_http_status(:created)
@@ -125,7 +125,7 @@ describe "Books API", type: :request do
                         email: "email@example.com", password: "password", password_confirmation: "password")
     }
     let!(:author) { FactoryBot.create(:author, user: user, first_name: "Test", last_name: "Author", age: 1) }
-    let!(:book) { FactoryBot.create(:book, author: author, title: "You") }
+    let!(:book) { FactoryBot.create(:book, author: author, title: "You", price: 100) }
 
     it "should delete a book successfully" do
 
